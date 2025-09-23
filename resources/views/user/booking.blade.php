@@ -8,13 +8,13 @@
         <div class="row g-3 d-flex justify-content-center">
             <div class="col-12 col-md-4">
                 <!-- <label for="title" class="form-label">Titolo</label> -->
-                <input type="text" class="form-control text-center" id="name" name="name" value="Nome utente">
+                <input type="text" class="form-control text-center" id="name" name="name" value="{{$user->name}}">
             </div>
         </div>
         <div class="row g-3 d-flex justify-content-center">
             <div class="col-12 col-md-4">
                 <!-- <label for="title" class="form-label">Titolo</label> -->
-                <input type="email" class="form-control text-center" id="email" name="email" value="Email utente">
+                <input type="email" class="form-control text-center" id="email" name="email" value="{{$user->email}}">
             </div>
         </div>
         <!-- Selezione giorno e orario -->
