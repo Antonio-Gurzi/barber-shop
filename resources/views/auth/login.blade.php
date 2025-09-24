@@ -37,4 +37,9 @@
             </div>
         </div>
     </div>
+
+    <div class="text-center d-flex flex-column gap-3">
+        <a href="{{route('register')}}" class="text-decoration-none">Non sei registrato?Clicca qui</a>
+        <a href="{{route('password.request')}}" class="text-decoration-none mb-3">Hai dimenticato la password?Clicca qui</a>
+    </div>
 </x-layout>

@@ -7,16 +7,15 @@
 
         <div class="row g-3 d-flex justify-content-center">
             <div class="col-12 col-md-4">
-                <!-- <label for="title" class="form-label">Titolo</label> -->
-                <input type="text" class="form-control text-center" id="name" name="name" value="{{$user->name}}">
+                <p class="fs-4 text-center">Ciao {{$user->name}}, prenota pure il tuo appuntamento!</p>
             </div>
         </div>
-        <div class="row g-3 d-flex justify-content-center">
+        <!-- <div class="row g-3 d-flex justify-content-center">
             <div class="col-12 col-md-4">
-                <!-- <label for="title" class="form-label">Titolo</label> -->
-                <input type="email" class="form-control text-center" id="email" name="email" value="{{$user->email}}">
+                <label for="title" class="form-label">Titolo</label>
+                <input type="email" class="form-control text-center" id="email" name="email" value="Email:{{$user->email}}">
             </div>
-        </div>
+        </div> -->
         <!-- Selezione giorno e orario -->
         <div class="container mt-5 d-flex flex-column align-items-center">
 
