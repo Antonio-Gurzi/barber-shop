@@ -27,12 +27,13 @@
 
                 <!-- Dropdown servizi -->
                 <div class="mb-3 text-center">
-                    <label for="serviceSelect" class="form-label">Seleziona servizio</label>
-                    <select id="serviceSelect" name="service" class="form-control">
-                        <option value="null" selected>-</option>
-                        <option value="taglio" data-duration="30">Taglio (30 min)</option>
-                        <option value="taglio_barba" data-duration="40">Taglio,Barba (40 min)</option>
-                        <option value="taglio_barba_shampoo" data-duration="50">Taglio, Barba e Shampoo (50 min)</option>
+                    <select id="serviceSelect" name="servicio_id" class="form-control" required>
+                        <option value="" selected>Seleziona un servizio</option>
+                        @foreach ($services as $service)
+                        <option value="{{ $service->id }}">
+                            {{ $service->service }} - {{ $service->duration }} min - €{{ $service->price }}
+                        </option>
+                        @endforeach
                     </select>
                 </div>
 
