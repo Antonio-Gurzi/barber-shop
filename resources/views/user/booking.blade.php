@@ -3,7 +3,7 @@
     @vite('resources/js/calendar.js')
 
 
-    <form action="" class="container d-flex flex-column gap-2 mt-5">
+    <form action="" class="container d-flex flex-column gap-2 my-5">
 
         <div class="row g-3 d-flex justify-content-center">
             <div class="col-12 col-md-4">
@@ -46,6 +46,12 @@
 
             <!-- Hidden input per la data selezionata -->
             <input type="hidden" id="bookingDate" name="bookingDate">
+
+            <div>
+                <form action="">
+                    <button type="submit" class="btn btn-success rounded-3">Prenota</button>
+                </form>
+            </div>
 
         </div>
 

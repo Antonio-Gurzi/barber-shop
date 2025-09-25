@@ -34,6 +34,14 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="phone" class="form-label">Numero di telefono</label>
+                        <input type="tel" class="form-control rounded-pill mx-auto" id="phone" name="phone" placeholder="recapito telefonico" required>
+                        @error('phone')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control rounded-pill mx-auto" id="password" name="password" placeholder="Inserisci la tua password" required autocomplete="off">
                         @error('password')

@@ -30,6 +30,8 @@ class CreateNewUser implements CreatesNewUsers
                 Rule::unique(User::class),
             ],
             'password' => $this->passwordRules(),
+            'phone' => ['required', 'string', 'max:20'],
+
         ])->validate();
 
         return User::create([
@@ -37,6 +39,7 @@ class CreateNewUser implements CreatesNewUsers
             'last_name' => $input['last_name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
+            'phone' => $input['phone'],
         ]);
     }
 }
