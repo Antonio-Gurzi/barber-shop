@@ -9,7 +9,7 @@
                 <li class="nav-item"><a class="nav-link" href="{{route('homepage')}}">home</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">servizi</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">negozio</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('user.booking') }}">Prenota</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('appointment.create') }}">Prenota</a></li>
             </ul>
         </div>
 

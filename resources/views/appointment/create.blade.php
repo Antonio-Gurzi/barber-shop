@@ -27,7 +27,7 @@
 
                 <!-- Dropdown servizi -->
                 <div class="mb-3 text-center">
-                    <select id="serviceSelect" name="servicio_id" class="form-control" required>
+                    <select id="serviceSelect" name="service_id" class="form-control" required>
                         <option value="" selected>Seleziona un servizio</option>
                         @foreach ($services as $service)
                         <option value="{{ $service->id }}">
