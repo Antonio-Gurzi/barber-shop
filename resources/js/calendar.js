@@ -1,53 +1,31 @@
-import { Calendar } from "@fullcalendar/core";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
+import { Calendar } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
 
-const availableTimes = [
-    "09:00",
-    "09:30",
-    "10:00",
-    "10:30",
-    "11:00",
-    "11:30",
-    "12:00",
-    "12:30",
-    "15:00",
-    "15:30",
-    "16:00",
-    "16:30",
-    "17:00",
-    "17:30",
-    "18:00",
-];
-
-document.addEventListener("DOMContentLoaded", function () {
-    const calendarEl = document.getElementById("calendar");
+document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
     if (!calendarEl) return;
 
     const calendar = new Calendar(calendarEl, {
         plugins: [dayGridPlugin, interactionPlugin],
-        initialView: "dayGridMonth",
-        locale: "it",
+        initialView: 'dayGridMonth',
+        locale: 'it',
         selectable: true,
-
-        // Definizione pulsanti personalizzati
+        height: 'auto',
+        headerToolbar: {
+            left: 'prev,next',
+            center: 'title',
+            right: 'oggiButton' // pulsante personalizzato
+        },
         customButtons: {
-            todayButton: {
-                text: "Oggi",
+            oggiButton: {
+                text: 'Oggi',
                 click: function () {
                     calendar.today(); // riporta al giorno corrente
-                },
-            },
+                }
+            }
         },
-
-        headerToolbar: {
-            left: "prev,next",
-            center: "title",
-            right: "todayButton", // pulsante oggi a destra
-        },
-
-        height: "auto",
-        select: function (info) {
+        dateClick: function (info) {
             handleDaySelect(info);
         },
     });
@@ -56,18 +34,24 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function handleDaySelect(info) {
-    const timeContainer = document.getElementById("timeContainer");
+    const timeContainer = document.getElementById('time');
+    if (!timeContainer) return;
+    timeContainer.innerHTML = '';
 
-    // rimuove eventuale select precedente
-    timeContainer.innerHTML = "";
+    const select = document.createElement('select');
+    select.id = 'timeSelect';
+    select.name = 'time';
+    select.classList.add('form-control');
 
-    // crea select orari
-    const select = document.createElement("select");
-    select.id = "timeSelect";
-    select.classList.add("form-control");
+    const availableTimes = [
+        '09:00', '09:30', '10:00', '10:30',
+        '11:00', '11:30', '12:00', '12:30',
+        '15:00', '15:30', '16:00', '16:30',
+        '17:00', '17:30', '18:00'
+    ];
 
     availableTimes.forEach((time) => {
-        const option = document.createElement("option");
+        const option = document.createElement('option');
         option.value = time;
         option.textContent = time;
         select.appendChild(option);
@@ -75,7 +59,8 @@ function handleDaySelect(info) {
 
     timeContainer.appendChild(select);
 
-    // salva la data selezionata
-    const dateInput = document.getElementById("bookingDate");
-    dateInput.value = info.startStr;
+    const dateInput = document.getElementById('day');
+    if (dateInput) {
+        dateInput.value = info.dateStr;
+    }
 }

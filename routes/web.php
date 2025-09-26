@@ -11,4 +11,5 @@ Route::get('/', [PublicController::class, 'home'])->name('homepage');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/appointment/create', [AppointmentController::class, 'create'])->name('appointment.create');
+    Route::post('/appointment', [AppointmentController::class, 'store'])->name('appointment.store');
 });
