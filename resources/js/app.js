@@ -16,5 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
         altInput: true, // mostra un campo alternativo più leggibile
         altFormat: "d-m-Y", // formato visibile all’utente (uguale a quello inviato)
         locale: Italian, // lingua italiana
+        minDate: "today",       // blocca le date precedenti a oggi
     });
 });

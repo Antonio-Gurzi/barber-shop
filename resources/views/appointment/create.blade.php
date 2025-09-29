@@ -1,6 +1,5 @@
 <x-layout>
     <x-slot:titleTab>Prenota</x-slot:titleTab>
-    @vite('resources/js/calendar.js')
 
 
     <form action="{{ route('appointment.store') }}" method="POST" class="container d-flex flex-column gap-2 my-5">
@@ -12,30 +11,32 @@
             </div>
         </div>
 
+        <x-flash />
 
 
-        <section class="d-flex justify-content-center align-items-center min-vh-100">
+        <section class="d-flex justify-content-center align-items-center">
+
             <div class="card shadow-lg border-0" style="max-width: 500px; width: 100%;">
                 <div class="card-body p-4 text-center">
 
-                    <h4 class="mb-4">Prenotazione</h4>
+                    <h4 class="mb-2">Prenotazione</h4>
 
                     {{-- Email --}}
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control mx-auto w-50 text-center" id="email"
-                            name="email" value="{{ $user->email }}">
-                    </div>
+                            name="email" value="{{ $user->email }}" readonly>
+                    </div> --}}
 
                     {{-- Calendario --}}
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <label for="day" class="form-label">Giorno</label>
                         <input type="text" name="day" id="day"
                             class="form-control mx-auto w-50 text-center datepicker" value="{{ old('day') }}">
                     </div>
 
                     {{-- Dropdown servizi --}}
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <label for="service_id" class="form-label">Servizio</label>
                         <select id="service_id" name="service_id" class="form-select mx-auto w-50 text-center" required>
                             <option value="" selected>Seleziona un servizio</option>
@@ -48,9 +49,9 @@
                     </div>
 
                     {{-- Orari --}}
-                    <div class="mb-4">
-                        <label for="orario" class="form-label">Orario</label>
-                        <select name="orario" id="orario" class="form-select mx-auto w-50 text-center">
+                    <div class="mb-2">
+                        <label for="time" class="form-label">Orario</label>
+                        <select name="time" id="time" class="form-select mx-auto w-50 text-center">
                             @foreach ($hours as $hour)
                                 <option value="{{ $hour }}">{{ $hour }}</option>
                             @endforeach
@@ -66,6 +67,7 @@
                 </div>
             </div>
         </section>
+
 
 
 
