@@ -24,7 +24,19 @@ class AppointmentController extends Controller
     {
         $user = Auth::user(); // utente loggato
         $services = Service::all(); // tutti i servizi
-        return view('appointment/create', compact('user', 'services'));
+
+        $hours = [];
+        for ($h = 9; $h < 13; $h++) {
+            foreach ([0, 30] as $m) {
+                $hours[] = sprintf("%02d:%02d", $h, $m);
+            }
+        }
+        for ($h = 15; $h < 18; $h++) {
+            foreach ([0, 30] as $m) {
+                $hours[] = sprintf("%02d:%02d", $h, $m);
+            }
+        }
+        return view('appointment/create', compact('user', 'services','hours'));
     }
 
     /**
@@ -32,6 +44,7 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
+
         dd($request->all());
     }
 
