@@ -55,24 +55,35 @@ class AppointmentController extends Controller
                 });
 
                 // Aggiungo come nuovo slot disponibile la fine del servizio
-                $freeHours[] = $end->format('H:i');
+                $endTime = $end->format('H:i');
+                if ($endTime <= '18:00') {
+                    $freeHours[] = $endTime;
+                }
             }
 
             // Riordino in ordine crescente
             usort($freeHours, fn($a, $b) => strtotime($a) <=> strtotime($b));
             $freeHours = array_values($freeHours);
+
+            // 🔹 Controllo se l'appuntamento alle 18:00 esiste e rimuovo lo slot
+            $eighteenOccupied = $appointments->contains(function ($appointment) {
+                return Carbon::createFromFormat('H:i:s', $appointment->time)->format('H:i') === '18:00';
+            });
+
+            if ($eighteenOccupied) {
+                $key = array_search('18:00', $freeHours);
+                if ($key !== false) {
+                    unset($freeHours[$key]);
+                    $freeHours = array_values($freeHours); // reindicizzo l'array
+                }
+            }
         } else {
             // Se non è stato selezionato il giorno → flash message
-            session()->flash('danger', 'Seleziona un giorno per vedere gli orari disponibili.');
+            return redirect()->back()->with('warning', 'Seleziona un giorno per vedere gli orari disponibili.');
         }
 
         return view('appointment.create', compact('user', 'services', 'freeHours', 'request'));
     }
-
-
-
-
-
 
 
     /**

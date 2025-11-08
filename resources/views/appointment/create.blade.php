@@ -2,8 +2,8 @@
     <x-slot:titleTab>Prenota</x-slot:titleTab>
 
     {{-- Form per selezionare il giorno --}}
-    <x-flash />
-    <form action="{{ route('appointment.create') }}" method="GET" class="container d-flex flex-column gap-2 my-5">
+    <form action="{{ route('appointment.create') }}" method="GET" class="container d-flex flex-column gap-2 my-5 text-center">
+        <x-flash />
         <div class="mb-2">
             <label for="day" class="form-label">Giorno</label>
             <input type="text" name="day" id="day" class="form-control mx-auto w-50 text-center datepicker"
@@ -17,7 +17,7 @@
 
     {{-- Mostra form prenotazione solo se ci sono slot liberi --}}
     @if(!empty($freeHours))
-    <form action="{{ route('appointment.store') }}" method="POST" class="container d-flex flex-column gap-2 my-5">
+    <form action="{{ route('appointment.store') }}" method="POST" class="container d-flex flex-column gap-2 my-5 text-center">
         @csrf
 
         <div class="mb-2">
