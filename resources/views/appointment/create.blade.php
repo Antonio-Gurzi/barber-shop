@@ -1,118 +1,28 @@
 <x-layout>
     <x-slot:titleTab>Prenota</x-slot:titleTab>
 
-
-    <form action="{{ route('appointment.store') }}" method="POST" class="container d-flex flex-column gap-2 my-5">
-        @csrf
-
-        <div class="row g-3 d-flex justify-content-center">
-            <div class="col-12 col-md-4">
-                <p class="fs-4 text-center">Ciao {{ $user->name }}, prenota pure il tuo appuntamento!</p>
-            </div>
+    {{-- Form per selezionare il giorno --}}
+    <x-flash />
+    <form action="{{ route('appointment.create') }}" method="GET" class="container d-flex flex-column gap-2 my-5">
+        <div class="mb-2">
+            <label for="day" class="form-label">Giorno</label>
+            <input type="text" name="day" id="day" class="form-control mx-auto w-50 text-center datepicker"
+                value="{{ request('day') }}" required>
         </div>
-
-        <x-flash />
-
-
-        <section class="d-flex justify-content-center align-items-center">
-
-            <div class="card shadow-lg border-0" style="max-width: 500px; width: 100%;">
-                <div class="card-body p-4 text-center">
-
-                    <h4 class="mb-2">Prenotazione</h4>
-
-                    {{-- Email --}}
-                    {{-- <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control mx-auto w-50 text-center" id="email"
-                            name="email" value="{{ $user->email }}" readonly>
-                    </div> --}}
-
-                    {{-- Calendario --}}
-                    <div class="mb-2">
-                        <label for="day" class="form-label">Giorno</label>
-                        <input type="text" name="day" id="day"
-                            class="form-control mx-auto w-50 text-center datepicker" value="{{ old('day') }}">
-                    </div>
-
-                    {{-- Dropdown servizi --}}
-                    <div class="mb-2">
-                        <label for="service_id" class="form-label">Servizio</label>
-                        <select id="service_id" name="service_id" class="form-select mx-auto w-50 text-center" required>
-                            <option value="" selected>Seleziona un servizio</option>
-                            @foreach ($services as $service)
-                                <option value="{{ $service->id }}">
-                                    {{ $service->service }} - {{ $service->duration }} min - €{{ $service->price }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    {{-- Orari --}}
-                    <div class="mb-2">
-                        <label for="time" class="form-label">Orario</label>
-                        <select name="time" id="time" class="form-select mx-auto w-50 text-center">
-                            @foreach ($hours as $hour)
-                                <option value="{{ $hour }}">{{ $hour }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    {{-- Button prenotazione --}}
-                    <div>
-                        <button type="submit" class="btn btn-success btn-sm rounded-3 w-25">
-                            Prenota
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-
-
+        <div class="mb-2 text-center">
+            <button type="submit" class="btn btn-primary">Mostra orari disponibili</button>
+        </div>
     </form>
 
 
-</x-layout>
+    {{-- Mostra form prenotazione solo se ci sono slot liberi --}}
+    @if(!empty($freeHours))
+    <form action="{{ route('appointment.store') }}" method="POST" class="container d-flex flex-column gap-2 my-5">
+        @csrf
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{{-- ------------------------------------- --}}
-
-<!-- <div class="row g-3 d-flex justify-content-center">
-            <div class="col-12 col-md-4">
-                <label for="title" class="form-label">Titolo</label>
-                <input type="email" class="form-control text-center" id="email" name="email" value="Email:{{ $user->email }}">
-            </div>
-        </div> -->
-<!-- Selezione giorno e orario -->
-{{-- <div class="container mt-5 d-flex flex-column align-items-center"> --}}
-
-<!-- Calendario centrato -->
-{{-- <div id="calendar"></div> --}}
-
-<!-- Select container -->
-{{-- <div id="selectionContainer" class="mt-4 w-100" style="max-width: 350px;"> --}}
-
-<!-- Dropdown servizi -->
-{{-- <div class="mb-3 text-center">
-            <select id="service_id" name="service_id" class="form-control" required>
+        <div class="mb-2">
+            <label for="service_id" class="form-label">Servizio</label>
+            <select id="service_id" name="service_id" class="form-select mx-auto w-50 text-center" required>
                 <option value="" selected>Seleziona un servizio</option>
                 @foreach ($services as $service)
                 <option value="{{ $service->id }}">
@@ -120,25 +30,30 @@
                 </option>
                 @endforeach
             </select>
-        </div> --}}
+        </div>
 
-{{-- <!-- Dropdown orari generato da JS -->
-        <div class="mb-3 text-center">
-            <label class="form-label">Seleziona orario</label>
-            <div id="time"></div>
-        </div> --}}
+        <div class="mb-2">
+            <label for="time" class="form-label">Orario</label>
+            <select name="time" id="time" class="form-select mx-auto w-50 text-center" required>
+                @foreach ($freeHours as $hour)
+                <option value="{{ $hour }}">{{ $hour }}</option>
+                @endforeach
+            </select>
+        </div>
 
-{{--
-    </div> --}}
+        {{-- Nascondo il giorno selezionato per inviarlo allo store --}}
+        <input type="hidden" name="day" value="{{ request('day') }}">
 
-<!-- Hidden input per la data selezionata -->
-{{-- <input type="hidden" id="day" name="day"> --}}
-
-
-{{-- <div>
-        <button type="submit" class="btn btn-success rounded-3">Prenota</button>
-    </div> --}}
-
-
-{{--
-</div> --}}
+        <div class="text-center">
+            <button type="submit" class="btn btn-success btn-sm rounded-3 w-25">
+                Prenota
+            </button>
+        </div>
+    </form>
+    @elseif($request->has('day'))
+    {{-- Se il giorno è stato selezionato ma non ci sono slot liberi --}}
+    <div class="container text-center my-3">
+        <p class="text-danger">Nessun orario disponibile per questo giorno.</p>
+    </div>
+    @endif
+</x-layout>

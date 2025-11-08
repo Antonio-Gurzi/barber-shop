@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class AppointmentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource (facoltativo).
      */
     public function index()
     {
@@ -23,93 +23,74 @@ class AppointmentController extends Controller
      */
     public function create(Request $request)
     {
-        // orari negozio
-        $hours = [
-            '09:00',
-            '10:00',
-            '11:00',
-            '12:00',
-            '15:00',
-            '16:00',
-            '17:00',
-            '18:00',
-        ];
+        $user = Auth::user();
+        $services = Service::all();
+        $freeHours = [];
 
+        if ($request->has('day') && !empty($request->day)) {
+            $formatDay = Carbon::createFromFormat('d-m-Y', $request->day)->format('Y-m-d');
 
-        $appointments = Appointment::all();
+            // Recupero tutti gli appuntamenti del giorno selezionato con durata del servizio
+            $appointments = Appointment::with('service')
+                ->where('day', $formatDay)
+                ->get();
 
-        //calcolo durata del servizio
-        foreach ($appointments as $appt) {
-            // Accede alla proprietà duration della tabella services
-            $duration = ($appt->service->duration);
-        }
-        //prendo il giorno selezionato a calendario
-        $selectDay = Appointment::pluck('day')->toArray();
-
-
-        // Estrai mese e giorno dal campo day
-        // $monthDay = substr($daySelected, 5, 5); // MM-DD
-        // dd($monthDay);
-        //prendo la colonna time dell appuntamento
-
-        $times = Appointment::pluck('time')->toArray();
-
-        //adeguo i formati e sommo l'appuntamento preso alla durata del servizio selezionato
-        foreach ($times as $time) {
-            // Prendi solo ore e minuti se il formato è HH:MM:SS
-            $timeHM = substr($time, 0, 5);
-            $timeCarbon = Carbon::createFromFormat('H:i', $timeHM);
-            $newTime = $timeCarbon->addMinutes($duration)->format('H:i');
-
-
-            // Controlla se è presente e rimuovi
-            if (in_array($timeHM, $hours)) {
-                $hourOccupated = array_search($timeHM, $hours);
-                unset($hours[$hourOccupated]);
-                //restituisce l array con i nuovi orari
-                $hours[] = $newTime;
-                //ordine l array in ordine crescente
-                sort($hours);
+            // Orari base (solo ore intere dalle 09:00 alle 18:00)
+            $baseHours = [];
+            for ($hour = 9; $hour <= 18; $hour++) {
+                $baseHours[] = sprintf('%02d:00', $hour);
             }
+
+            // Partiamo dagli slot liberi iniziali
+            $freeHours = $baseHours;
+
+            foreach ($appointments as $appointment) {
+                $start = Carbon::createFromFormat('H:i:s', $appointment->time);
+                $end = $start->copy()->addMinutes($appointment->service->duration);
+
+                // Rimuovo tutti gli slot che cadono dentro l'appuntamento
+                $freeHours = array_filter($freeHours, function ($slot) use ($start, $end) {
+                    $slotTime = Carbon::createFromFormat('H:i', $slot);
+                    return $slotTime->lt($start) || $slotTime->gte($end);
+                });
+
+                // Aggiungo come nuovo slot disponibile la fine del servizio
+                $freeHours[] = $end->format('H:i');
+            }
+
+            // Riordino in ordine crescente
+            usort($freeHours, fn($a, $b) => strtotime($a) <=> strtotime($b));
+            $freeHours = array_values($freeHours);
+        } else {
+            // Se non è stato selezionato il giorno → flash message
+            session()->flash('danger', 'Seleziona un giorno per vedere gli orari disponibili.');
         }
 
-        //riaggiorno l array aggiungendo un nuovo orario che parte dalla fine dell apputamento precedente(refreshHour e ricontrollo tutti gli orari,se già esistono,cancello quelli occupati)
-        $refhreshTime = Appointment::pluck('time')->toArray();
-
-        if (in_array($refhreshTime && $timeHM, $hours)) {
-            $hourOccupated = array_search($refhreshTime && $timeHM, $hours);
-            unset($hours[$hourOccupated]);
-        }
-
-        // Reindicizza l'array
-        $hours = array_values($hours);
-
-        $user = Auth::user(); // utente loggato
-        $services = Service::all(); // tutti i servizi
-
-
-
-
-
-        return view('appointment/create', compact('user', 'services', 'hours'));
+        return view('appointment.create', compact('user', 'services', 'freeHours', 'request'));
     }
+
+
+
+
+
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $appointment = new Appointment;
+        $request->validate([
+            'day' => 'required|date_format:d-m-Y',
+            'time' => 'required',
+            'service_id' => 'required|exists:services,id',
+        ]);
 
-        // Converte la data in formato MySQL
+        $appointment = new Appointment();
         $appointment->day = Carbon::createFromFormat('d-m-Y', $request->day)->format('Y-m-d');
         $appointment->time = $request->time;
         $appointment->service_id = $request->service_id;
-
-        // Se vuoi salvare l’utente loggato
         $appointment->user_id = Auth::id();
-
-        // Salva il record
         $appointment->save();
 
         return redirect()->back()->with('success', 'Appuntamento creato con successo');
