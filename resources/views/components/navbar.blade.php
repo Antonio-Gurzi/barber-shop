@@ -7,9 +7,15 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="{{route('homepage')}}">home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">servizi</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">negozio</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{route('service')}}">servizi</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" href="#">negozio</a></li> -->
                 <li class="nav-item"><a class="nav-link" href="{{ route('appointment.create') }}">Prenota</a></li>
+                @if(auth()->user() && auth()->user()->role === 'admin')
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('appointment.index') }}">Tutti gli appuntamenti</a>
+                </li>
+                @endif
+
             </ul>
         </div>
 

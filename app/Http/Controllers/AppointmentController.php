@@ -15,7 +15,9 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        //
+        $appointments = Appointment::orderBy('day', 'asc')->get();
+
+        return view('appointment.index ', compact('appointments'));
     }
 
     /**
@@ -29,6 +31,21 @@ class AppointmentController extends Controller
 
         if ($request->has('day') && !empty($request->day)) {
             $formatDay = Carbon::createFromFormat('d-m-Y', $request->day)->format('Y-m-d');
+
+            $formatDay = Carbon::createFromFormat('d-m-Y', $request->day)->format('Y-m-d');
+            $selectedDay = Carbon::parse($formatDay);
+            $now = Carbon::now();
+            $openingTime = Carbon::createFromTime(9, 0);
+
+            // Blocca Domenica e Lunedì
+            if ($selectedDay->isSunday() || $selectedDay->isMonday()) {
+                return redirect()->back()->with('warning', 'Il negozio è chiuso la domenica e il lunedì.');
+            }
+
+            //Blocca oggi se l’orario di apertura è già passato
+            if ($selectedDay->isToday() && $now->greaterThan($openingTime)) {
+                return redirect()->back()->with('warning', 'Per oggi non è più possibile prendere appuntamento.');
+            }
 
             // Recupero tutti gli appuntamenti del giorno selezionato con durata del servizio
             $appointments = Appointment::with('service')
@@ -65,7 +82,7 @@ class AppointmentController extends Controller
             usort($freeHours, fn($a, $b) => strtotime($a) <=> strtotime($b));
             $freeHours = array_values($freeHours);
 
-            // 🔹 Controllo se l'appuntamento alle 18:00 esiste e rimuovo lo slot
+            //Controllo se l'appuntamento alle 18:00 esiste e rimuovo lo slot
             $eighteenOccupied = $appointments->contains(function ($appointment) {
                 return Carbon::createFromFormat('H:i:s', $appointment->time)->format('H:i') === '18:00';
             });
@@ -77,10 +94,11 @@ class AppointmentController extends Controller
                     $freeHours = array_values($freeHours); // reindicizzo l'array
                 }
             }
-        } else {
-            // Se non è stato selezionato il giorno → flash message
-            return redirect()->back()->with('warning', 'Seleziona un giorno per vedere gli orari disponibili.');
         }
+        // else {
+        //     // Se non è stato selezionato il giorno → flash message
+        //     return redirect()->back()->with('warning', 'Seleziona un giorno per vedere gli orari disponibili.');
+        // }
 
         return view('appointment.create', compact('user', 'services', 'freeHours', 'request'));
     }
