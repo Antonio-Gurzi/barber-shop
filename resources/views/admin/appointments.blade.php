@@ -18,6 +18,7 @@
                     <th>Orario</th>
                     <th>Servizio</th>
                     <th>Prezzo</th>
+                    <th>Azioni</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,6 +30,14 @@
                     <td>{{ \Carbon\Carbon::parse($appointment->time)->format('H:i') }}</td>
                     <td>{{ $appointment->service->service }}</td>
                     <td>€{{ number_format($appointment->service->price, 2) }}</td>
+                    <td>
+                        <form action="{{ route('admin.appointments.destroy', $appointment->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"class="btn btn-danger btn-sm">Elimina</button>
+                        </form>
+                    </td>
+
                 </tr>
                 @endforeach
             </tbody>

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class ClientMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,9 +17,8 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
- 
-        if (!$user || $user->role !== 'admin') {
-            abort(403, 'Accesso negato'); 
+        if (!$user || $user->role !== 'client') {
+            abort(403, 'Accesso negato');
         }
         return $next($request);
     }

@@ -13,12 +13,7 @@ class AppointmentController extends Controller
     /**
      * Display a listing of the resource (facoltativo).
      */
-    public function index()
-    {
-        $appointments = Appointment::orderBy('day', 'asc')->get();
 
-        return view('appointment.index ', compact('appointments'));
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -152,8 +147,10 @@ class AppointmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Appointment $appointment)
     {
-        //
+        $appointment->delete();
+
+        return redirect()->back()->with('success', 'Appuntamento cancellato con successo');
     }
 }
