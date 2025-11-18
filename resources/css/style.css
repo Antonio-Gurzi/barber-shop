@@ -84,3 +84,17 @@
 form input{
     max-width: 50vh;
 }
+
+/* Transizione per tutte le card */
+.transition-transform {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Effetto hover: scala leggermente e aumenta l'ombra */
+.hover-scale:hover {
+    transform: scale(1.05);
+}
+
+.hover-shadow:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2) !important;
+}

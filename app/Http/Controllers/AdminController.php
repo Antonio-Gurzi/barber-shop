@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function index()
-    {
-        $appointments = Appointment::orderBy('day', 'asc')->get();
+public function index()
+{
+    $appointments = Appointment::orderBy('day', 'asc')
+        ->orderBy('time', 'asc')
+        ->get();
 
-        return view('admin.appointments', compact('appointments'));
-    }
-
-
+    return view('admin.appointments', compact('appointments'));
+}
 }
