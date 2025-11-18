@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             'last_name' => 'Buccafurri',
             'email' => 'fabiobuccafurri@live.com',
             'password' => bcrypt('12345678'),
+            'phone' => '3334445555',
             'role'  => 'admin',
         ]);
 
