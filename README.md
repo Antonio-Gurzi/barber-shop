@@ -24,9 +24,9 @@ BarberApp è un'applicazione web sviluppata con **Laravel** e **MySQL** che perm
 
 - **Backend**: Laravel
 - **Database**: MySQL
-- **Autenticazione**: Laravel Breeze / Jetstream
-- **Frontend**: Blade Templates, Tailwind CSS / Bootstrap
-- **Gestione date e orari**: FullCalendar.js o simili
+- **Autenticazione**: Laravel Fortify
+- **Frontend**: Blade Templates,Bootstrap
+- **Gestione date e orari**: flatpickr
 - **Stato e logica**: Laravel Controllers e Eloquent ORM
 
 ---
