@@ -5,7 +5,7 @@
     <form action="{{ route('appointment.create') }}" method="GET" class="container d-flex flex-column gap-2 my-5 text-center">
         <x-flash />
         <div class="mb-2">
-            <label for="day" class="form-label">Giorno</label>
+            <label for="day" class="form-label fs-5 fw-bold">Giorno</label>
             <input type="text" name="day" id="day" class="form-control mx-auto w-50 text-center datepicker"
                 value="{{ request('day') }}" required>
         </div>

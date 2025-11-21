@@ -17,17 +17,18 @@
 
                 <!-- Data -->
                 <p class="mb-1 fw-bold text-primary">
-                   Giorno : {{ \Carbon\Carbon::parse($appointment->day)->format('d/m/Y') }}
+                    Giorno : {{ \Carbon\Carbon::parse($appointment->day)->format('d/m/Y') }}
                 </p>
 
                 <!-- Dettagli appuntamento -->
                 <div class="ms-4 p-3 border rounded-3 shadow-sm bg-white">
-                    <p class="mb-1"><span class="fw-bold">Orario:</span> {{ \Carbon\Carbon::parse($appointment->time)->format('H:i') }}</p>
-                    <p class="mb-1"><span class="fw-bold">Cliente:</span> {{ $appointment->user->name }} ({{ $appointment->user->phone }})</p>
-                    <p class="mb-1"><span class="fw-bold">Servizio:</span> {{ $appointment->service->service }}</p>
+                    <p class="mb-1"><span class="fw-bold">Inizio:</span> {{ \Carbon\Carbon::parse($appointment->time)->format('H:i') }}</p>
                     <p class="mb-1">
                         <span class="fw-bold">Fine:</span> {{ \Carbon\Carbon::parse($appointment->time)->addMinutes($appointment->service->duration)->format('H:i') }}
                     </p>
+                    <p class="mb-1"><span class="fw-bold">Cliente:</span> {{ $appointment->user->name }} ({{ $appointment->user->phone }})</p>
+                    <p class="mb-1"><span class="fw-bold">Servizio:</span> {{ $appointment->service->service }}</p>
+
 
                     <p class="mb-1"><span class="fw-bold">Prezzo:</span> €{{ number_format($appointment->service->price, 2) }}</p>
 

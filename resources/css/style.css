@@ -81,7 +81,7 @@
     box-shadow: 0 0 0 0.25rem rgba(0, 3, 9, 0.367);
 }
 
-form input{
+form input {
     max-width: 50vh;
 }
 
@@ -104,10 +104,11 @@ form input{
 }
 
 /* stile card admindashboard */
-        .timeline li {
-            list-style: none;
-        }
-        .timeline li span {
-            width: 12px;
-            height: 12px;
-        }
+.timeline li {
+    list-style: none;
+}
+.timeline li span {
+    width: 12px;
+    height: 12px;
+}
+
