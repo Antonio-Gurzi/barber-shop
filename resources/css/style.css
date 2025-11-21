@@ -102,3 +102,12 @@ form input{
 .bg-layout {
     background-color: #cfd3d6;
 }
+
+/* stile card admindashboard */
+        .timeline li {
+            list-style: none;
+        }
+        .timeline li span {
+            width: 12px;
+            height: 12px;
+        }

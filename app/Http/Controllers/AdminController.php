@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+
 
 class AdminController extends Controller
 {
@@ -21,7 +23,5 @@ class AdminController extends Controller
             ->get();
 
         return view('admin.appointments', compact('appointments'));
-
-
     }
 }
