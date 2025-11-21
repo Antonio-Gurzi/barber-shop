@@ -7,12 +7,21 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-public function index()
-{
-    $appointments = Appointment::orderBy('day', 'asc')
-        ->orderBy('time', 'asc')
-        ->get();
+    public function index()
+    {
+        // Tutti gli appuntamenti ordinati per giorno e ora
+        // $appointments = Appointment::orderBy('day', 'asc')
+        //     ->orderBy('time', 'asc')
+        //     ->get();
 
-    return view('admin.appointments', compact('appointments'));
-}
+        //tutti gli appuntamenti esclusi quelli passati
+        $appointments = Appointment::whereDate('day', '>=', today())
+            ->orderBy('day', 'asc')
+            ->orderBy('time', 'asc')
+            ->get();
+
+        return view('admin.appointments', compact('appointments'));
+
+
+    }
 }
