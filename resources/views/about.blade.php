@@ -14,17 +14,17 @@
                 <div class="col-12 col-md-8">
                     <h2 class="mb-3 text-white">Ciao, sono Fabio proprietario di GLAMOOD</h2>
                     <p>
-                        Nato e cresciuto a Reggio Calabria, ho sempre avuto una forte vena creativa, esplorando diversi progetti fin da ragazzo. Tra tutte le mie passioni, quella che mi ha conquistato completamente è il mondo dell’<strong>hair styling</strong>.
+                        Nato e cresciuto a Reggio Calabria, ho sempre avuto una forte vena creativa, esplorando diversi progetti fin da ragazzo. Tra tutte le mie passioni, quella che mi ha conquistato completamente è il mondo dell’<span class="fw-bold">hair styling</span>.
                     </p>
                     <p>
-                        Dopo anni di gavetta e tanta esperienza, ho capito che per crescere davvero dovevo mettermi alla prova nella mia città. Nonostante le sfide che comporta aprire un’attività in una realtà complessa come la nostra, ho deciso di realizzare il mio sogno: <strong>aprire il mio negozio</strong>.
+                        Dopo anni di gavetta e tanta esperienza, ho capito che per crescere davvero dovevo mettermi alla prova nella mia città. Nonostante le sfide che comporta aprire un’attività in una realtà complessa come la nostra, ho deciso di realizzare il mio sogno: <span class="fw-bold">aprire il mio negozio</span>.
                     </p>
                     <p>
-                        Qui ti aspetto, pronto a offrirti <strong>passione, professionalità e il massimo della qualità</strong> in ogni servizio.
+                        Qui ti aspetto, pronto a offrirti <span class="fw-bold">passione, professionalità e il massimo della qualità</span> in ogni servizio.
                     </p>
                     <a href="{{ route('appointment.create') }}"
                         class="btn btn-outline-success btn-sm w-100">
-                        Prenota Ora
+                        Prenota Adesso il tuo appuntamento
                     </a>
                 </div>
 
