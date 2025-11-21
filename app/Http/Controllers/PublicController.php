@@ -16,4 +16,8 @@ class PublicController extends Controller
         $services = Service::all();
         return view('service', compact('services'));
     }
+    public function about()
+    {
+        return view('about');
+    }
 }

@@ -12,6 +12,7 @@ use App\Http\Controllers\AppointmentController;
 
 Route::get('/', [PublicController::class, 'home'])->name('homepage');
 Route::get('/service', [PublicController::class, 'service'])->name('service');
+Route::get('/about', [PublicController::class, 'about'])->name('about');
 
 
 Route::middleware(['auth'])->group(function () {

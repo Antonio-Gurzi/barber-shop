@@ -8,6 +8,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="{{route('homepage')}}">home</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{route('service')}}">servizi</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{route('about')}}">chi sono</a></li>
                 <!-- <li class="nav-item"><a class="nav-link" href="#">negozio</a></li> -->
                 <li class="nav-item"><a class="nav-link" href="{{ route('appointment.create') }}">Prenota</a></li>
                 @if(auth()->user() && auth()->user()->role === 'admin')
