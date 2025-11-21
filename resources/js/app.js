@@ -25,10 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 const day = date.getDay();
                 const now = new Date();
 
-                // 1️⃣ Blocca domenica e lunedì
+                //Blocca domenica e lunedì
                 if(day === 0 || day === 1) return true;
 
-                // 2️⃣ Blocca oggi se è dopo l’orario di chiusura
+                //Blocca oggi se è dopo l’orario di chiusura
                 const isToday = date.toDateString() === now.toDateString();
                 if(isToday && now.getHours() >= closingHour) return true;
 
