@@ -115,4 +115,11 @@ form input {
     height: 12px;
 }
 
+.header-bg {
+    height: 30vh;
+    background: url("/public/img/landing2.jpg");
 
+    background-size: cover;
+    background-position: center;
+    /* background-repeat: no-repeat; */
+}
