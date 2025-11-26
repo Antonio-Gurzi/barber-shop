@@ -15,7 +15,7 @@
                 <h2 class="accordion-header d-flex align-items-center justify-content-between p-3 bg-light rounded-4" id="heading{{ $appointment->id }}">
                     <div>
                         <span class="fw-bold fs-5">{{ $appointment->user->name }}</span>
-                        <div class="text-muted fs-6">
+                        <div class="fs-6">
                             {{ \Carbon\Carbon::parse($appointment->time)->format('H:i') }}
                             - {{ \Carbon\Carbon::parse($appointment->day)->format('d/m/Y') }}
                         </div>
